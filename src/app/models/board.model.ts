@@ -1,5 +1,11 @@
 import { Column } from './column.models';
 
 export class Board {
-  constructor(public name: string, public columns: Column[]) {}
+  name: string;
+  columns: Column[];
+
+  constructor(name: string, columns: Column[]) {
+    this.name = name;
+    this.columns = columns;
+  }
 }
