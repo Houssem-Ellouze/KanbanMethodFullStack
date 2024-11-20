@@ -17,12 +17,18 @@ export class MainViewComponent {
     return Array.from({ length: count }, () => new Task(""));
   }
 
+  list = ['Ideas', 'Research', 'ToDo', 'Done'];
+
+  titleColors = ['#000000', '#000000', '#000000', '#000000'];
+
+  colors = ['#FFB3B3', '#FFE0B3', '#D4FFB3', '#B3E5FF'];
+
   // Define board with columns and tasks
   board: Board = new Board('Test Board', [
-    new Column('Ideas', this.generateTasks(5)),
-    new Column('Research', this.generateTasks(5)),
-    new Column('Todo', this.generateTasks(5)),
-    new Column('Done', this.generateTasks(5))
+    new Column(this.list[0], this.generateTasks(5)),
+    new Column(this.list[1], this.generateTasks(5)),
+    new Column(this.list[2], this.generateTasks(5)),
+    new Column(this.list[3], this.generateTasks(5))
   ]);
 
   // Method to handle drag and drop
@@ -39,5 +45,13 @@ export class MainViewComponent {
         event.currentIndex
       );
     }
+  }
+
+  // Get the color for a specific column
+  getColumnColor(index: number): string {
+    return this.colors[index];
+  }
+  getTitleColor(index: number): string {
+    return this.titleColors[index];
   }
 }

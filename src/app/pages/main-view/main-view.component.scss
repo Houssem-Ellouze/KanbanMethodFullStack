@@ -48,13 +48,13 @@
 
         }
 
-        .column-title{
-          font-size: 20px;
+        .board-name{
+          font-size: 200px;
           font-weight: 800;
           font-family: 'Lato', sans-serif;
           text-transform: uppercase;
           margin-bottom: 20px;
-          color: black;
+          color: #e20606;
         }
 
 
@@ -129,4 +129,24 @@ input:focus {
   color: white;
   font-size: 18px;
   font-weight: bold;
+}
+.board-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.column {
+  flex: 1;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.task-container {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: grab;
 }
