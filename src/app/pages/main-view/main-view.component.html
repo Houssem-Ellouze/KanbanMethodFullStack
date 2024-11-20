@@ -1,4 +1,5 @@
 <div class="root">
+  <!-- Navbar -->
   <div class="navbar has-background-dark">
     <div class="navbar-brand">
       <div class="navbar-item">
@@ -7,37 +8,48 @@
     </div>
   </div>
 
+  <!-- Kanban Board -->
   <div class="board">
-
+    <!-- Board Name -->
     <div class="board-bar">
       <p class="board-name">{{ board.name }}</p>
     </div>
 
+    <!-- Board Wrapper -->
     <div class="board-wrapper">
-
       <div class="board-columns" cdkDropListGroup>
-        <div class="board-wrapper">
-          <div *ngFor="let column of board.columns; let i = index"
-               class="column"
-               cdkDropList
-               [cdkDropListData]="column.tasks"
-               (cdkDropListDropped)="drop($event)"
-               [ngStyle]="{'background-color': getColumnColor(i), 'color': getTitleColor(i), 'font-size': '20px'}">
+        <!-- Iterate over columns -->
+        <div
+          *ngFor="let column of board.columns; let i = index"
+          class="column"
+          cdkDropList
+          [cdkDropListData]="column.tasks"
+          (cdkDropListDropped)="drop($event)"
+          [ngStyle]="{
+            'background-color': getColumnColor(i),
+            'color': getTitleColor(i),
+            'font-size': '20px'
+          }"
+        >
           <h3>{{ column.name }}</h3>
-            <div *ngFor="let task of column.tasks" class="task-container" cdkDrag>
-              <input type="text" [(ngModel)]="task.text"  />
-            </div>
+
+          <!-- Iterate over tasks -->
+          <div *ngFor="let task of column.tasks; let taskIndex = index" class="task-container" cdkDrag>
+            <input type="text" [(ngModel)]="task.text" />
+          </div>
+
+          <!-- Button under the fifth task -->
+          <div *ngIf="column.tasks.length >= 5">
+            <button class="add-task-btn" (click)="addTask(i)">Add Task</button>
           </div>
         </div>
-
-
       </div>
-
     </div>
   </div>
 
-<div class="foooter">
-  <p> &copy; Created By : Houssem Ellouze</p>
-  <p>Powered By : Angular TS</p>
-</div>
+  <!-- Footer -->
+  <div class="foooter">
+    <p>&copy; Created By : Houssem Ellouze</p>
+    <p>Powered By : Angular TS</p>
+  </div>
 </div>

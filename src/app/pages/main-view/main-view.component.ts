@@ -54,4 +54,9 @@ export class MainViewComponent {
   getTitleColor(index: number): string {
     return this.titleColors[index];
   }
+
+  addTask(columnIndex: number): void {
+    this.board.columns[columnIndex].tasks.push(new Task(''));
+  }
+
 }
