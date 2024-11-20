@@ -5,6 +5,7 @@ import { Column } from 'src/app/models/column.models';
 import { Task } from 'src/app/models/task.model';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import * as XLSX from 'xlsx'; // Import XLSX for Excel export
 
 @Component({
   selector: 'app-main-view',
@@ -16,10 +17,10 @@ export class MainViewComponent {
 
   // Board Definition
   board: Board = new Board('Test Board', [
-    new Column('Ideas', [new Task('Task 1'), new Task('Task 2')]),
-    new Column('Research', [new Task('Task 3'), new Task('Task 4')]),
-    new Column('ToDo', [new Task('Task 5'), new Task('Task 6')]),
-    new Column('Done', [new Task('Task 7'), new Task('Task 8')])
+    new Column('Ideas', [new Task(''), new Task('')]),
+    new Column('Research', [new Task(''), new Task('')]),
+    new Column('ToDo', [new Task(''), new Task('')]),
+    new Column('Done', [new Task(''), new Task('')])
   ]);
 
   // Export Board as PDF
@@ -39,6 +40,28 @@ export class MainViewComponent {
     });
   }
 
+  // Export Board as Excel
+  exportBoardAsExcel(): void {
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.convertBoardToExcelFormat());
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Kanban Board');
+    XLSX.writeFile(wb, 'Kanban_Board.xlsx');
+  }
+
+  // Convert board data to Excel format
+  convertBoardToExcelFormat(): any[] {
+    let tasks: any[] = [];
+    this.board.columns.forEach((column) => {
+      column.tasks.forEach((task) => {
+        tasks.push({
+          Column: column.name,
+          Task: task.text
+        });
+      });
+    });
+    return tasks;
+  }
+
   // Add Task
   addTask(columnIndex: number): void {
     this.board.columns[columnIndex].tasks.push(new Task(''));
@@ -48,8 +71,6 @@ export class MainViewComponent {
   removeTask(columnIndex: number, taskIndex: number): void {
     this.board.columns[columnIndex].tasks.splice(taskIndex, 1);
   }
-
-
 
   // Drag and Drop Logic
   drop(event: CdkDragDrop<Task[]>): void {
@@ -64,8 +85,6 @@ export class MainViewComponent {
       );
     }
   }
-
-
   list = ['Ideas', 'Research', 'ToDo', 'Done'];
 
   titleColors = ['#000000', '#000000', '#000000', '#000000'];
