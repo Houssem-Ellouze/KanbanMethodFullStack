@@ -176,3 +176,16 @@ input:focus {
 .remove-task-btn:hover {
   background-color: #ff3831;
 }
+.export-pdf-btn {
+  margin-left: 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+.export-pdf-btn:hover {
+  background-color: #45a049;
+}

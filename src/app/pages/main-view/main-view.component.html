@@ -10,9 +10,12 @@
 
   <!-- Kanban Board -->
   <div class="board">
-    <!-- Board Name -->
+    <!-- Board Name with Export Button -->
     <div class="board-bar">
-      <p class="board-name">{{ board.name }}</p>
+      <p class="board-name">
+        {{ board.name }}
+        <button class="export-pdf-btn" (click)="exportBoardAsPDF()">Export PDF</button>
+      </p>
     </div>
 
     <!-- Board Wrapper -->

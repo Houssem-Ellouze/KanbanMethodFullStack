@@ -3,6 +3,8 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { Board } from 'src/app/models/board.model';
 import { Column } from 'src/app/models/column.models';
 import { Task } from 'src/app/models/task.model';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-main-view',
@@ -12,32 +14,48 @@ import { Task } from 'src/app/models/task.model';
 export class MainViewComponent {
   ngOnInit() {}
 
-  // Method to generate an array of empty tasks
-  generateTasks(count: number): Task[] {
-    return Array.from({ length: count }, () => new Task(""));
-  }
-
-  list = ['Ideas', 'Research', 'ToDo', 'Done'];
-
-  titleColors = ['#000000', '#000000', '#000000', '#000000'];
-
-  colors = ['#FFB3B3', '#FFE0B3', '#D4FFB3', '#B3E5FF'];
-
-  // Define board with columns and tasks
+  // Board Definition
   board: Board = new Board('Test Board', [
-    new Column(this.list[0], this.generateTasks(5)),
-    new Column(this.list[1], this.generateTasks(5)),
-    new Column(this.list[2], this.generateTasks(5)),
-    new Column(this.list[3], this.generateTasks(5))
+    new Column('Ideas', [new Task('Task 1'), new Task('Task 2')]),
+    new Column('Research', [new Task('Task 3'), new Task('Task 4')]),
+    new Column('ToDo', [new Task('Task 5'), new Task('Task 6')]),
+    new Column('Done', [new Task('Task 7'), new Task('Task 8')])
   ]);
 
-  // Method to handle drag and drop
-  drop(event: CdkDragDrop<Task[]>) {
-    // If the task is moved within the same column
+  // Export Board as PDF
+  exportBoardAsPDF(): void {
+    const boardElement = document.querySelector('.board') as HTMLElement;
+    if (!boardElement) return;
+
+    html2canvas(boardElement).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('landscape', 'mm', 'a4');
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save('Kanban_Board.pdf');
+    });
+  }
+
+  // Add Task
+  addTask(columnIndex: number): void {
+    this.board.columns[columnIndex].tasks.push(new Task(''));
+  }
+
+  // Remove Task
+  removeTask(columnIndex: number, taskIndex: number): void {
+    this.board.columns[columnIndex].tasks.splice(taskIndex, 1);
+  }
+
+
+
+  // Drag and Drop Logic
+  drop(event: CdkDragDrop<Task[]>): void {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      // If the task is moved to another column
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
@@ -47,20 +65,18 @@ export class MainViewComponent {
     }
   }
 
-  // Get the color for a specific column
+
+  list = ['Ideas', 'Research', 'ToDo', 'Done'];
+
+  titleColors = ['#000000', '#000000', '#000000', '#000000'];
+
+  colors = ['#FFB3B3', '#FFE0B3', '#D4FFB3', '#B3E5FF'];
+
+
   getColumnColor(index: number): string {
     return this.colors[index];
   }
   getTitleColor(index: number): string {
     return this.titleColors[index];
   }
-
-  removeTask(columnIndex: number, taskIndex: number): void {
-    this.board.columns[columnIndex].tasks.splice(taskIndex, 1);
-  }
-
-  addTask(columnIndex: number): void {
-    this.board.columns[columnIndex].tasks.push({ text: '' });
-  }
-
 }
