@@ -31,17 +31,19 @@
             'font-size': '20px'
           }"
         >
+          <!-- Column Title -->
           <h3>{{ column.name }}</h3>
 
-          <!-- Iterate over tasks -->
+          <!-- Tasks -->
           <div *ngFor="let task of column.tasks; let taskIndex = index" class="task-container" cdkDrag>
-            <input type="text" [(ngModel)]="task.text" />
+            <div class="task">
+              <input type="text" [(ngModel)]="task.text" />
+              <button class="remove-task-btn" (click)="removeTask(i, taskIndex)">Remove</button>
+            </div>
           </div>
 
-          <!-- Button under the fifth task -->
-          <div *ngIf="column.tasks.length >= 5">
-            <button class="add-task-btn" (click)="addTask(i)">Add Task</button>
-          </div>
+          <!-- Add Task Button -->
+          <button class="add-task-btn" (click)="addTask(i)">Add Task</button>
         </div>
       </div>
     </div>

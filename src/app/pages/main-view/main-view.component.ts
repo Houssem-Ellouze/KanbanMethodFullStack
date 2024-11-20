@@ -55,8 +55,12 @@ export class MainViewComponent {
     return this.titleColors[index];
   }
 
+  removeTask(columnIndex: number, taskIndex: number): void {
+    this.board.columns[columnIndex].tasks.splice(taskIndex, 1);
+  }
+
   addTask(columnIndex: number): void {
-    this.board.columns[columnIndex].tasks.push(new Task(''));
+    this.board.columns[columnIndex].tasks.push({ text: '' });
   }
 
 }
