@@ -33,7 +33,7 @@ export class MainViewComponent {
       const pdf = new jsPDF('landscape', 'mm', 'a4');
       const imgProps = pdf.getImageProperties(imgData);
       const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      const pdfHeight = (imgProps.height * pdfWidth) *2/ imgProps.width;
 
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
       pdf.save('Kanban_Board.pdf');
