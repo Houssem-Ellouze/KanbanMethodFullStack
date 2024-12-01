@@ -56,15 +56,13 @@
           margin-bottom: 20px;
           color: #e20606;
         }
-
-
       }
     }
   }
 }
 .task-container{
   flex-grow: 1;
-  margin: 10px auto;
+  margin: 5px auto;
 }
 .task{
   display: flex;
@@ -201,4 +199,9 @@ input:focus {
 
 .export-excel-btn:hover {
   background-color: #0056b3;
+}
+.board-columns{
+  display: flex;
+  width: 10%;
+  height: 150%;
 }
