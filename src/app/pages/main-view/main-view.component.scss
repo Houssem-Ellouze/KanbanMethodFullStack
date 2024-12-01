@@ -62,7 +62,6 @@
 }
 .task-container{
   flex-grow: 1;
-  margin: 5px auto;
 }
 .task{
   display: flex;
@@ -141,10 +140,7 @@ input:focus {
 }
 
 .task-container {
-  margin: 0.5rem 0;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 14px;
   background-color: #fff;
   cursor: grab;
 }
@@ -205,3 +201,4 @@ input:focus {
   width: 10%;
   height: 150%;
 }
+
