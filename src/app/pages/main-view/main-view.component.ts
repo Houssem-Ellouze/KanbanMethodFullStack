@@ -25,16 +25,15 @@ export class MainViewComponent {
 
   // Export Board as PDF
   exportBoardAsPDF(): void {
-    const boardElement = document.querySelector('.board') as HTMLElement;
+    const boardElement = document.querySelector('.board-columns') as HTMLElement;
     if (!boardElement) return;
 
     html2canvas(boardElement).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('landscape', 'mm', 'a4');
+      const pdf = new jsPDF('landscape', 'mm', 'a5');
       const imgProps = pdf.getImageProperties(imgData);
       const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (imgProps.height * pdfWidth) *2/ imgProps.width;
-
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width * 1.75;
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
       pdf.save('Kanban_Board.pdf');
     });
